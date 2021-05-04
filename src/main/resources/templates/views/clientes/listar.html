@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="plantilla/template :: head"> 
+    </head>
+    <body>
+        <header th:replace="plantilla/template :: header"></header>
+        <div class="container">
+            <h1 th:text="${titulo}"></h1>
+            <a class="btn btn-primary mb-2" th:href="@{/views/clientes/nuevo}" th:text="'Nuevo Cliente'"></a>
+            
+            <table class="table table-striped table-dark">
+  <thead class="bg-success">
+    <tr >
+      <th scope="col">#</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Apellido</th>
+      <th scope="col">Telefono</th>
+      <th scope="col">Email</th>
+      <th scope="col">Ciudad</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:each="cli:${clientes}">
+      <th scope="row" th:text="${cli.id}"></th>
+      <td th:text="${cli.nombre}"></td>
+      <td th:text="${cli.apellido}"></td>
+      <td th:text="${cli.telefono}"></td>
+      <td th:text="${cli.email}"></td>
+      <td th:text="${cli.ciudad.nombre_ciudad}"></td>
+    </tr>
+    
+  </tbody>
+</table>
+        </div>
+        
+        <footer th:replace="plantilla/template :: footer"></footer>
+    </body>
+</html>
