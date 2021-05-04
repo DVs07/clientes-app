@@ -5,4 +5,5 @@ import java.util.List;
 
 public interface ICiudadService {
     List<Ciudad> listarCiudades();
+    public void guardarCiudad(Ciudad ciudad);
 }

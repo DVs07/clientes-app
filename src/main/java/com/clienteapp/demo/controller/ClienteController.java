@@ -11,11 +11,15 @@ import com.clienteapp.demo.entity.Cliente;
 import com.clienteapp.demo.service.ICiudadService;
 import com.clienteapp.demo.service.IClienteService;
 import java.util.List;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -51,13 +55,41 @@ public class ClienteController {
         model.addAttribute("ciudades", listaCiudades);
         return "/views/clientes/form-cliente";
     }
+
     @PostMapping("/guardar")
-    public String guardarCliente(@ModelAttribute Cliente cliente){
+    public String guardarCliente(@Valid @ModelAttribute Cliente cliente, BindingResult result, Model model){
+        /*List<Ciudad> listaCiudades = ciudadService.listarCiudades();
+        
+        if(result.hasErrors()){
+            model.addAttribute("titulo", "Nuevo Cliente");
+            model.addAttribute("cliente", cliente);
+            model.addAttribute("ciudades", listaCiudades);
+            System.out.println("Error al cargar datos en el formulario");
+            return "/views/clientes/form-cliente";  
+        }*/
         
         clienteService.guardarCliente(cliente);
+        System.out.println("Cliente guardado con exito!");
         return "redirect:/views/clientes/";
     }
-
+    
+    @GetMapping("/editar/{id}")
+    public String editarCliente(@PathVariable("id") Long idCliente, Model model){
+        Cliente cliente = clienteService.buscarPorId(idCliente);
+        List<Ciudad> listaCiudades = ciudadService.listarCiudades();
+        
+        model.addAttribute("titulo", "Editar Cliente");
+        model.addAttribute("cliente", cliente);
+        model.addAttribute("ciudades", listaCiudades);
+        return "/views/clientes/form-cliente";
+    }
+    
+    @GetMapping("/eliminar/{id}")
+    public String eliminarCliente(@PathVariable("id") Long idCliente){
+        clienteService.eliminarCliente(idCliente);
+        System.out.println("Se elimino el cliente con Id[" + idCliente +"]");
+        return "redirect:/views/clientes/";
+    }
 }
 
 

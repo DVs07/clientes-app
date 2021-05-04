@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="plantilla/template :: head"> 
+    </head>
+    <body>
+        <header th:replace="plantilla/template :: header"></header>
+        <div class="container">
+            <div class="card mt-5 bg-light text-dark">
+                <div class="card-header bg-dark text-light"> <span class="ml-2" th:text="${titulo}"></span> </div>
+                    <div class="card-body">
+                        <form th:action="@{/views/ciudades/agregar}" th:object="${ciudad}" method="post">
+                    <div class="form-group row">
+                        <input type="hidden" th:field="*{id}">
+                        <label class="col-md-1 ml-4" for="nombre_ciudad">Nombre</label>
+                        <input type="text" th:field="*{nombre_ciudad}" class="form-control form-control-sm col-md-6" id="nombre" required>
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('nombre_ciudad')}"
+                            th:errors="*{nombre_ciudad}"></small>
+                    </div>
+                        <div class="card-footer bg-dark">
+                            <input type="submit" class="btn btn-success ml-4" value="Guardar"/>
+                        </div>
+                    </form>
+                </div>    
+            </div>
+        </div>
+        <footer th:replace="plantilla/template :: footer"></footer>
+    </body>
+</html>

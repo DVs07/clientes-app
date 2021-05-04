@@ -17,5 +17,10 @@ public class CiudadServiceImpl implements ICiudadService{
         
         return (List<Ciudad>)ciudadRepository.findAll();
     }
+
+    @Override
+    public void guardarCiudad(Ciudad ciudad) {
+        ciudadRepository.save(ciudad);
+    }
     
 }

@@ -6,7 +6,6 @@
 package com.clienteapp.demo.entity;
 
 import java.io.Serializable;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,6 +13,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 /**
  *
@@ -26,36 +28,20 @@ public class Cliente implements Serializable{
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
-    @Column(length = 128, nullable = false, unique = true)
+    @NotEmpty
     private String nombre;
-    @Column(length = 128, nullable = false, unique = true)
+    @NotEmpty
     private String apellido;
-    @Column(length = 45, nullable = false, unique = true)
+    @NotEmpty
     private String telefono;
-    @Column(length = 45, nullable = false, unique = true)
+    @NotEmpty
+    @Email
     private String email;
     @ManyToOne
     @JoinColumn(name="ciudades_id")
     private Ciudad ciudad;
     
-    public Cliente(){
-        super();
-    }
     
-    public Cliente(Long id) {
-        super();
-        this.id = id;
-    }
-
-    public Cliente(String nombre, String apellido, String telefono, String email, Ciudad ciudad) {
-        super();
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.telefono = telefono;
-        this.email = email;
-        this.ciudad = ciudad;
-    }
-
     public Long getId() {
         return id;
     }
@@ -104,12 +90,9 @@ public class Cliente implements Serializable{
         this.ciudad = ciudad;
     }
    
-    
-
     @Override
     public String toString() {
         return "Cliente{" + "id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", telefono=" + telefono + ", email=" + email + ", ciudad=" + ciudad + '}';
     }
 
-    
 }
