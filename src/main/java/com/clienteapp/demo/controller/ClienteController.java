@@ -43,7 +43,7 @@ public class ClienteController {
         List<Cliente> listaClientes = clienteService.listarClientes();
         model.addAttribute("titulo","Lista de clientes");
         model.addAttribute("clientes" , listaClientes);
-        return "/views/listar-clientes";
+        return "views/listar-clientes";
     }
     
     @GetMapping("/nuevo")
@@ -54,7 +54,7 @@ public class ClienteController {
         model.addAttribute("titulo", "Nuevo Cliente");
         model.addAttribute("cliente", cliente);
         model.addAttribute("ciudades", listaCiudades);
-        return "/views/form-cliente";
+        return "views/form-cliente";
     }
 
     @PostMapping("/guardar")
