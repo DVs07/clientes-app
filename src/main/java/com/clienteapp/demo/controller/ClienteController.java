@@ -43,10 +43,10 @@ public class ClienteController {
         List<Cliente> listaClientes = clienteService.listarClientes();
         model.addAttribute("titulo","Lista de clientes");
         model.addAttribute("clientes" , listaClientes);
-        return "views/listar-clientes";
+        return "views/clientes/listar-clientes";
     }
     
-    @GetMapping("/nuevo")
+    @GetMapping("/nuevo-cliente")
     public String nuevoCliente(Model model){
         Cliente cliente = new Cliente();
         List<Ciudad> listaCiudades = ciudadService.listarCiudades();
@@ -54,7 +54,7 @@ public class ClienteController {
         model.addAttribute("titulo", "Nuevo Cliente");
         model.addAttribute("cliente", cliente);
         model.addAttribute("ciudades", listaCiudades);
-        return "views/form-cliente";
+        return "views/clientes/form-cliente";
     }
 
     @PostMapping("/guardar")
@@ -73,7 +73,7 @@ public class ClienteController {
         clienteService.guardarCliente(cliente);
         System.out.println("Cliente guardado con exito!");
         attribute.addFlashAttribute("success", "Cliente guardado con exito!");
-        return "redirect:/views/clientes/";
+        return "redirect:views/clientes/listar-clientes";
     }
     
     @GetMapping("/editar/{id}")
@@ -86,12 +86,12 @@ public class ClienteController {
                 System.out.println("El cliente no existe");
                 attribute.addFlashAttribute("error","Error: El ID del cliente no"
                         + " existe!");
-                return "redirect:/views/clientes/";
+                return "redirect:views/clientes/listar-clientes";
             }
         }else{
             System.out.println("Problemas con el Id");
             attribute.addFlashAttribute("error","Error: ID erroneo");
-            return "redirect:/views/clientes/";
+            return "redirect:views/clientes/listar-clientes";
         }
         
         List<Ciudad> listaCiudades = ciudadService.listarCiudades();
@@ -99,7 +99,7 @@ public class ClienteController {
         model.addAttribute("titulo", "Editar Cliente");
         model.addAttribute("cliente", cliente);
         model.addAttribute("ciudades", listaCiudades);
-        return "/views/form-cliente";
+        return "views/clientes/form-cliente";
     }
     
     @GetMapping("/eliminar/{id}")
@@ -112,17 +112,17 @@ public class ClienteController {
                 System.out.println("El cliente no existe");
                 attribute.addFlashAttribute("error","ATENCIÖN: El ID del cliente no"
                         + " existe!");
-                return "redirect:/views/clientes/";
+                return "redirect:views/clientes/listar-clientes";
             }
         }else{
             System.out.println("Problemas con el Id.");
             attribute.addFlashAttribute("error","ATENCIÖN: ID erroneo");
-            return "redirect:/views/clientes/";
+            return "redirect:views/clientes/listar-clientes";
         }
         clienteService.eliminarCliente(idCliente);
         System.out.println("Se elimino el cliente con Id[" + idCliente +"]");
         attribute.addFlashAttribute("warning"," Se elimino el cliente con Id[" + idCliente +"]");
-        return "redirect:/views/clientes/";
+        return "redirect:views/clientes/listar-clientes";
     }
 }
 

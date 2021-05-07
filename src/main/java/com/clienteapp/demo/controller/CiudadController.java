@@ -18,12 +18,12 @@ public class CiudadController {
     @Autowired
     private ICiudadService ciudadService;
     
-    @GetMapping("/")
+    @GetMapping("/listar-ciudades")
     public String listarCiudades(Model model){
         List<Ciudad> listaCiudades = ciudadService.listarCiudades();
         model.addAttribute("titulo","Lista de ciudades");
         model.addAttribute("ciudades" , listaCiudades);
-        return "/views/ciudades/listar";
+        return "views/ciudades/listar";
     }
     
     @GetMapping("/nueva-ciudad")
@@ -31,12 +31,12 @@ public class CiudadController {
         Ciudad ciudad = new Ciudad();
         model.addAttribute("titulo", "Nueva Ciudad");
         model.addAttribute("ciudad", ciudad);
-        return "/views/ciudades/form-ciudad";
+        return "views/ciudades/form-ciudad";
     }
     
     @PostMapping("/agregar")
     public String guardarCiudad(@ModelAttribute Ciudad ciudad){
         ciudadService.guardarCiudad(ciudad);
-        return "redirect:/views/ciudades/";
+        return "redirect:views/ciudades/";
     }
 }
