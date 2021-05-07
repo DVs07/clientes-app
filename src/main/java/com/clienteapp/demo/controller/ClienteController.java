@@ -29,7 +29,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  * @author aldop
  */
 @Controller
-@RequestMapping("/")
+@RequestMapping("/views/clientes")
 public class ClienteController {
     
     @Autowired
@@ -38,7 +38,7 @@ public class ClienteController {
     @Autowired
     private ICiudadService ciudadService;
     
-    @GetMapping("views/clientes/listar")
+    @GetMapping("/")
     public String listarClientes(Model model){
         List<Cliente> listaClientes = clienteService.listarClientes();
         model.addAttribute("titulo","Lista de clientes");
