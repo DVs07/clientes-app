@@ -23,7 +23,7 @@ public class CiudadController {
         List<Ciudad> listaCiudades = ciudadService.listarCiudades();
         model.addAttribute("titulo","Lista de ciudades");
         model.addAttribute("ciudades" , listaCiudades);
-        return "views/ciudades/listar";
+        return "views/ciudades/listar-ciudades";
     }
     
     @GetMapping("/nueva-ciudad")
@@ -37,6 +37,6 @@ public class CiudadController {
     @PostMapping("/agregar")
     public String guardarCiudad(@ModelAttribute Ciudad ciudad){
         ciudadService.guardarCiudad(ciudad);
-        return "redirect:views/ciudades/";
+        return "redirect:views/ciudades/listar-ciudades";
     }
 }
