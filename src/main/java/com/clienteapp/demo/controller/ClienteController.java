@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -57,7 +58,8 @@ public class ClienteController {
     }
 
     @PostMapping("/guardar")
-    public String guardarCliente(@Valid @ModelAttribute Cliente cliente, BindingResult result, Model model){
+    public String guardarCliente(@Valid @ModelAttribute Cliente cliente, 
+            BindingResult result, Model model, RedirectAttributes attribute){
         /*List<Ciudad> listaCiudades = ciudadService.listarCiudades();
         
         if(result.hasErrors()){
@@ -70,12 +72,28 @@ public class ClienteController {
         
         clienteService.guardarCliente(cliente);
         System.out.println("Cliente guardado con exito!");
+        attribute.addFlashAttribute("success", "Cliente guardado con exito!");
         return "redirect:/views/clientes/";
     }
     
     @GetMapping("/editar/{id}")
-    public String editarCliente(@PathVariable("id") Long idCliente, Model model){
-        Cliente cliente = clienteService.buscarPorId(idCliente);
+    public String editarCliente(@PathVariable("id") Long idCliente, Model model
+            , RedirectAttributes attribute){
+        Cliente cliente = null;
+        if(idCliente > 0){
+            cliente = clienteService.buscarPorId(idCliente);
+            if(cliente == null){
+                System.out.println("El cliente no existe");
+                attribute.addFlashAttribute("error","Error: El ID del cliente no"
+                        + " existe!");
+                return "redirect:/views/clientes/";
+            }
+        }else{
+            System.out.println("Problemas con el Id");
+            attribute.addFlashAttribute("error","Error: ID erroneo");
+            return "redirect:/views/clientes/";
+        }
+        
         List<Ciudad> listaCiudades = ciudadService.listarCiudades();
         
         model.addAttribute("titulo", "Editar Cliente");
@@ -85,9 +103,25 @@ public class ClienteController {
     }
     
     @GetMapping("/eliminar/{id}")
-    public String eliminarCliente(@PathVariable("id") Long idCliente){
+    public String eliminarCliente(@PathVariable("id") Long idCliente, 
+            RedirectAttributes attribute){
+        Cliente cliente = null;
+        if(idCliente > 0){
+            cliente = clienteService.buscarPorId(idCliente);
+            if(cliente == null){
+                System.out.println("El cliente no existe");
+                attribute.addFlashAttribute("error","ATENCIÖN: El ID del cliente no"
+                        + " existe!");
+                return "redirect:/views/clientes/";
+            }
+        }else{
+            System.out.println("Problemas con el Id.");
+            attribute.addFlashAttribute("error","ATENCIÖN: ID erroneo");
+            return "redirect:/views/clientes/";
+        }
         clienteService.eliminarCliente(idCliente);
         System.out.println("Se elimino el cliente con Id[" + idCliente +"]");
+        attribute.addFlashAttribute("warning"," Se elimino el cliente con Id[" + idCliente +"]");
         return "redirect:/views/clientes/";
     }
 }
