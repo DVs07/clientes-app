@@ -38,7 +38,7 @@ public class ClienteController {
     @Autowired
     private ICiudadService ciudadService;
     
-    @GetMapping("views/clientes/clientes")
+    @GetMapping("views/clientes/listar")
     public String listarClientes(Model model){
         List<Cliente> listaClientes = clienteService.listarClientes();
         model.addAttribute("titulo","Lista de clientes");
